@@ -9,69 +9,74 @@ window.onload = function(){
     };
     
     function capitalize(str){
+        if (str === ''){
+            return;
+        }else{
         let result = str[0].toUpperCase() + str.substr(1).toLowerCase();
         return result;
+        }
     }
     function playRound(playerSelection,computerSelection){
-        // Check if playerSelection(should be capitalized) is not the same as computerSelection
-        if((capitalize(playerSelection) != computerSelection)&& capitalize(playerSelection)!=" "){
-            // if playerSelection is "Rock" and computerSelection is "Scissors"
-            if(capitalize(playerSelection)==="Rock" && computerSelection === "Scissors"){
-                // return that "Rock beats Scissors"
-                return `Rock beats Scissors player`;
-            }
-            // else if playerSelection is "Scissors" and computerSelection is "Paper"
-            else if (capitalize(playerSelection) === "Scissors" && computerSelection === "Paper"){
-                // return that "Scissors beats Paper"
-                return `Scissors beats Paper`;
-            }
-            // else if playerSelection is "Paper" and computerSelection is "Rock"
-            else if(capitalize(playerSelection)==="Paper" && computerSelection === "Rock"){
-                // return that "Paper beats Rock"
-                return `Paper beats Rock`;
-            }
-            
-        }
-            return "Selected the same";
-        
+        let str = '';
+            switch(capitalize(playerSelection)){
+                case "Rock":
+                    if(computerSelection === "Scissors"){
+                        str = "Player beats Computer";
+                    }else if(computerSelection === "Paper"){
+                        str = "Computer beats Player";
+                    }else{
+                        str = "Selected same input";
+                    }
+                    break;
+                case "Scissors":
+                    if(computerSelection === "Rock"){
+                        str = "Computer beats Player";
+                    }else if(computerSelection === "Paper"){
+                        str = "Player beats Computer";
+                    }else{
+                        str = "Selected same input";
+                    }
+                    break;
+                case "Paper":
+                    if(computerSelection === "Rock"){
+                        str = "Player beats Computer";
+                    }else if(computerSelection === "Scissors"){
+                       str = "Computer beats Player";
+                    }else{
+                        str = "Selected same input";
+                    }
+                    break;
+                default:
+                    console.log("Game Over!!")
+                    break;
+        } 
+        return str;  
 }
-    // `This function tracks results of the computer through the 5 iterations and returns a list of results.`
-    function getResults(){
+
+// `This function tracks results of the computer through the 5 iterations and returns a list of results.`
+function getResults(){
+    let res = []
     let player = 0;
     let computer = 0;
-    let playerSelection = "";
-    let computerSelection = ""; 
-    let res = []
     for(let i=0;i<5;i++){
-        playerSelection = prompt("Enter your pick? ");
+        let playerSelection = prompt("Enter your pick: ");
         console.log(playerSelection)
-        computerSelection = getComputerSelection();
+        let computerSelection = getComputerSelection();
         console.log(computerSelection)
-        if(playRound(playerSelection,computerSelection) != "Selected the same"){
-            if((capitalize(playerSelection) === "Rock" && computerSelection ==="Scissors")||(capitalize(playerSelection) === "Scissors" && computerSelection === "Paper")||(capitalize(playerSelection)==="Paper" && computerSelection === "Rock")){
-                player = player + 1;
-            }else if((capitalize(playerSelection) === "Scissors" && computerSelection ==="Rock")||(capitalize(playerSelection) === "Paper" && computerSelection === "Scissors")||(capitalize(playerSelection)==="Rock" && computerSelection === "Paper")){
-                computer = computer + 1;
-            }
-        }
+        res.push(playRound(playerSelection,computerSelection))
+        console.log(playRound(playerSelection,computerSelection))
     }
-    return [computer,player];
-    }
-
-    // `This function declares the winner of the game based on the results returned by getResults function.`
-    function declareWinner(){
-        let res= getResults()
-        let player = res[1]
-        let computer = res[0]
-        console.log(player,computer)
-        if (player > computer){
-            return `You ${player} beat Computer ${computer}`
-        }else if(computer > player){
-            return `Computer ${computer} beat You ${player}`
+    for(let i=0;i<res.length;i++){
+        if(res[i] === "Computer beats Player"){
+            computer++;
+        }else if(res[i]==="Player beats Computer"){
+            player++;
         }else{
-            return `Draw: Computer ${computer} and You ${player}`
+            continue;
         }
     }
-    
-    console.log(declareWinner())
+    console.log(`computer ${computer} and player ${player}`)
+    return [computer,player]
+}
+console.log(getResults())
 }
