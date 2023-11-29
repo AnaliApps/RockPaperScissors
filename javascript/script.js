@@ -1,4 +1,5 @@
 window.onload = function(){
+    // let res = [];
     function getComputerSelection(){
     // Create an array to hold Rock,Paper and Scissors
         let result = ["Rock","Paper","Scissors"];
@@ -54,10 +55,8 @@ window.onload = function(){
 }
 
 // `This function tracks results of the computer through the 5 iterations and returns a list of results.`
-function getResults(){
-    let res = []
-    let player = 0;
-    let computer = 0;
+function game(){
+    let res = [];
     for(let i=0;i<5;i++){
         let playerSelection = prompt("Enter your pick: ");
         console.log(playerSelection)
@@ -66,6 +65,15 @@ function getResults(){
         res.push(playRound(playerSelection,computerSelection))
         console.log(playRound(playerSelection,computerSelection))
     }
+    // console.log(`computer ${computer} and player ${player}`)
+    return res
+}
+// console.log(res)
+function getResults(){
+    let player = 0;
+    let computer = 0;
+    let res = [...game()]
+    let output = ''
     for(let i=0;i<res.length;i++){
         if(res[i] === "Computer beats Player"){
             computer++;
@@ -75,8 +83,14 @@ function getResults(){
             continue;
         }
     }
-    console.log(`computer ${computer} and player ${player}`)
-    return [computer,player]
+    if(player > computer){
+        output = `Player beat Computer - ${player} : ${computer}`
+    }else if(player < computer){
+        output = `Computer beat Player - ${computer} : ${player}`
+    }else{
+        output = `Computer and Player have tied.`
+    }
+    return output
 }
 console.log(getResults())
 }
