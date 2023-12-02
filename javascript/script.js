@@ -1,6 +1,6 @@
 window.onload = function(){
-    // let res = [];
-    function getComputerSelection(){
+    let resOut = [];
+    function getComputerChoice(){
     // Create an array to hold Rock,Paper and Scissors
         let result = ["Rock","Paper","Scissors"];
     // Return a random number from 0 to length of result 
@@ -8,7 +8,8 @@ window.onload = function(){
     // Use the random number to return Rock, Paper and Scissors randomly
         return result[choice];
     };
-    
+    let playerSelection = ''
+    const computerSelection = getComputerChoice();
     function capitalize(str){
         if (str === ''){
             return;
@@ -26,8 +27,9 @@ window.onload = function(){
                     }else if(computerSelection === "Paper"){
                         str = "Computer beats Player";
                     }else{
-                        str = "Selected same input";
+                        str = "Same selection";
                     }
+                    
                     break;
                 case "Scissors":
                     if(computerSelection === "Rock"){
@@ -35,7 +37,7 @@ window.onload = function(){
                     }else if(computerSelection === "Paper"){
                         str = "Player beats Computer";
                     }else{
-                        str = "Selected same input";
+                        str = "Same selection";
                     }
                     break;
                 case "Paper":
@@ -44,53 +46,45 @@ window.onload = function(){
                     }else if(computerSelection === "Scissors"){
                        str = "Computer beats Player";
                     }else{
-                        str = "Selected same input";
+                        str = "Same selection";
                     }
                     break;
                 default:
-                    console.log("Game Over!!")
                     break;
         } 
         return str;  
 }
-
-// `This function tracks results of the computer through the 5 iterations and returns a list of results.`
 function game(){
-    let res = [];
-    for(let i=0;i<5;i++){
-        let playerSelection = prompt("Enter your pick: ");
-        console.log(playerSelection)
-        let computerSelection = getComputerSelection();
-        console.log(computerSelection)
-        res.push(playRound(playerSelection,computerSelection))
-        console.log(playRound(playerSelection,computerSelection))
-    }
-    // console.log(`computer ${computer} and player ${player}`)
-    return res
-}
-// console.log(res)
-function getResults(){
+    let res = []
     let player = 0;
     let computer = 0;
-    let res = [...game()]
-    let output = ''
+    for(let i=0;i<5;i++){
+        playerSelection = prompt("Enter your selection: ")
+        res.push(playRound(playerSelection,computerSelection));
+        console.log(playRound(playerSelection,computerSelection))
+    }
+
     for(let i=0;i<res.length;i++){
-        if(res[i] === "Computer beats Player"){
+        if (res[i] === "Computer beats Player"){
+            console.log("Computer beats Player")
             computer++;
-        }else if(res[i]==="Player beats Computer"){
+        }else if(res[i] === "Player beats Computer"){
+            console.log("Player beats Computer")
             player++;
         }else{
             continue;
         }
     }
-    if(player > computer){
-        output = `Player beat Computer - ${player} : ${computer}`
-    }else if(player < computer){
-        output = `Computer beat Player - ${computer} : ${player}`
-    }else{
-        output = `Computer and Player have tied.`
-    }
-    return output
+    resOut = [computer,player]
+    console.log(res)
+    return resOut
 }
-console.log(getResults())
+console.log(game())
+console.log(`resOut ${resOut} - 1 is ${resOut[0]} - 2 is ${resOut[1]}`)
+
+while(resOut[0] === resOut[1]){
+    game()
+}
+console.log(`resOut ${resOut} - 1 is ${resOut[0]} - 2 is ${resOut[1]}`)
+
 }
