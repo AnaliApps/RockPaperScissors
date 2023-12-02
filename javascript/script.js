@@ -80,11 +80,16 @@ function game(){
     return resOut
 }
 console.log(game())
-console.log(`resOut ${resOut} - 1 is ${resOut[0]} - 2 is ${resOut[1]}`)
+console.log(`resOut ${resOut} - player is ${resOut[0]} - computer is ${resOut[1]}`)
 
 while(resOut[0] === resOut[1]){
     game()
 }
-console.log(`resOut ${resOut} - 1 is ${resOut[0]} - 2 is ${resOut[1]}`)
+if (resOut[0] > resOut[1]){
+    console.log("Computer beats Player")
+}else if(resOut[0] < resOut[1]){
+    console.log("Player beats Computer")
+}
+console.log(`resOut ${resOut} - computer is ${resOut[0]} - player is ${resOut[1]}`)
 
 }
