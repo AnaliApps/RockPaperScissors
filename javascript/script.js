@@ -1,5 +1,4 @@
     // global array to store results from game function.
-    let resOut = [];
     function getComputerChoice(){
     // Create an array to hold Rock,Paper and Scissors
         let result = ["Rock","Paper","Scissors"];
@@ -24,9 +23,6 @@
 
     function playRound(playerSelection,computerSelection){
         let str = '';
-        let res = [];
-        let computer=0;
-        let player = 0;
             switch(capitalize(playerSelection)){
                 case "Rock":
                     if(computerSelection === "Scissors"){
@@ -63,7 +59,6 @@
         return str;  
 }
 
-// console.log(playRound("Rock",computerSelection))
 
 function game(){
     let selected = '' 
@@ -108,7 +103,6 @@ function game(){
                 body.appendChild(div);
                 player=0;
                 computer=0; 
-                // game();
             }
             
         })
