@@ -5,12 +5,14 @@ window.onload = function(){
     // Create an array to hold Rock,Paper and Scissors
         let result = ["Rock","Paper","Scissors"];
     // Return a random number from 0 to length of result 
-        let choice = Math.floor(Math.random() * result.length)
+        let choice = Math.floor(Math.random() * result.length);
     // Use the random number to return Rock, Paper and Scissors randomly
         return result[choice];
     };
+
     let playerSelection = ''
     const computerSelection = getComputerChoice();
+
     // Function used to capitalize(first letter is capital and rest are small letters) a string "str" e.g. "Rock"
     function capitalize(str){
         if (str === ''){
@@ -20,6 +22,7 @@ window.onload = function(){
         return result;
         }
     }
+
     function playRound(playerSelection,computerSelection){
         let str = '';
             switch(capitalize(playerSelection)){
@@ -56,19 +59,18 @@ window.onload = function(){
         } 
         return str;  
 }
+
 function game(){
-    // Holds result of the game
     let res = []  
-    // Holds results of the player
     let player = 0;
-    // Holds results of the computer
     let computer = 0;
-    // Runs playRound 5 times and for each iteration res is updated
+
     for(let i=0;i<5;i++){
         playerSelection = prompt("Enter your selection: ")
         res.push(playRound(playerSelection,computerSelection));
         console.log(playRound(playerSelection,computerSelection))
     }
+
 // loop through res and update how many times player wins and how many times computer wins and the result is returned by game function.
     for(let i=0;i<res.length;i++){
         if (res[i] === "Computer beats Player"){
@@ -81,6 +83,7 @@ function game(){
             continue;
         }
     }
+
     resOut = [computer,player]
     console.log(res)
     return resOut
@@ -88,11 +91,12 @@ function game(){
 console.log(game())
 console.log(`resOut ${resOut} - player is ${resOut[0]} - computer is ${resOut[1]}`)
 
-// if player has the same result as computer use while loop to run game until player or computer wins
+/* if player has the same result as computer use while loop to run game 
+until player or computer wins */ 
 while(resOut[0] === resOut[1]){
     game()
 }
-// Check if computer > player or whether player > computer
+// Check if computer is greater than player or whether player is greater than computer
 if (resOut[0] > resOut[1]){
     console.log("Computer beats Player")
 }else if(resOut[0] < resOut[1]){
