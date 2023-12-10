@@ -1,4 +1,3 @@
-window.onload = function(){
     // global array to store results from game function.
     let resOut = [];
     function getComputerChoice(){
@@ -25,6 +24,9 @@ window.onload = function(){
 
     function playRound(playerSelection,computerSelection){
         let str = '';
+        let res = [];
+        let computer=0;
+        let player = 0;
             switch(capitalize(playerSelection)){
                 case "Rock":
                     if(computerSelection === "Scissors"){
@@ -57,51 +59,60 @@ window.onload = function(){
                 default:
                     break;
         } 
+        
         return str;  
 }
 
+// console.log(playRound("Rock",computerSelection))
+
 function game(){
-    let res = []  
-    let player = 0;
+    let selected = '' 
     let computer = 0;
-
-    for(let i=0;i<5;i++){
-        playerSelection = prompt("Enter your selection: ")
-        res.push(playRound(playerSelection,computerSelection));
-        console.log(playRound(playerSelection,computerSelection))
-    }
-
-// loop through res and update how many times player wins and how many times computer wins and the result is returned by game function.
-    for(let i=0;i<res.length;i++){
-        if (res[i] === "Computer beats Player"){
-            console.log("Computer beats Player")
-            computer++;
-        }else if(res[i] === "Player beats Computer"){
-            console.log("Player beats Computer")
-            player++;
-        }else{
-            continue;
-        }
-    }
-
-    resOut = [computer,player]
-    console.log(res)
-    return resOut
+    let player = 0;
+    let div = document.createElement("div");
+    div.setAttribute("class","score");
+    let para = document.createElement("p")
+    let pDiv = document.createElement("div")
+    pDiv.setAttribute("class","rScore")
+    let body = document.querySelector("body");
+    let btns = Array.from(document.querySelectorAll("button"));
+    btns.forEach(btn =>{
+        btn.addEventListener("click",()=>{
+            selected = playRound(btn.textContent,computerSelection)
+            div.innerText = '';
+            para.textContent = '';
+            console.log(selected)
+            pDiv.innerText = selected;
+            if(selected === "Computer beats Player"){
+                computer++;
+            }else if(selected === "Player beats Computer"){
+                player++;
+            }else{
+                console.log("same")
+            }
+            para.textContent = `Computer ${computer} and Player ${player}`;
+            pDiv.appendChild(para)
+            body.appendChild(pDiv)
+            if(computer === 5 && player < 5){
+                div.innerText = "Computer wins";
+                body.appendChild(div);
+                player=0;
+                computer=0;
+            }else if(player === 5 && computer < 5){
+                div.innerText = "Player wins";
+                body.appendChild(div);
+                player=0;
+                computer=0;
+            }else if((computer === player)&&(player != 0 && computer != 0 )){
+                div.innerText = "Draw, replaying the game.."
+                body.appendChild(div);
+                player=0;
+                computer=0; 
+                // game();
+            }
+            
+        })
+        
+    })
 }
 console.log(game())
-console.log(`resOut ${resOut} - player is ${resOut[0]} - computer is ${resOut[1]}`)
-
-/* if player has the same result as computer use while loop to run game 
-until player or computer wins */ 
-while(resOut[0] === resOut[1]){
-    game()
-}
-// Check if computer is greater than player or whether player is greater than computer
-if (resOut[0] > resOut[1]){
-    console.log("Computer beats Player")
-}else if(resOut[0] < resOut[1]){
-    console.log("Player beats Computer")
-}
-console.log(`resOut ${resOut} - computer is ${resOut[0]} - player is ${resOut[1]}`)
-
-}
